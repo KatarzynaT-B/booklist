@@ -18,6 +18,15 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'pg'
 
+gem 'webmock', group: :test
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0.beta'
+
+  gem 'debugger'
+  gem 'capybara'
+  gem 'factory_girl_rails'
+end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -27,7 +36,5 @@ gem 'pg'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# Use debugger
-gem 'debugger', group: [:development, :test]
 
 
