@@ -3,12 +3,16 @@ require 'faraday_middleware'
 
 class BooksImporter
 
-  def initialize(site_url='http://wolnelektury.pl/api/books/')
-    @books = fetch(site_url)
+  DEFAULT_URL = 'http://wolnelektury.pl/api/books/'
+
+  def initialize(site_url=BooksImporter::DEFAULT_URL)
+    @site_url = site_url
   end
 
   def import
-    @books.each do |book_hash|
+    books = fetch(@site_url)
+
+    books.each do |book_hash|
       book_url = book_hash["href"]
       book_details = fetch(book_url)
       book = Book.find_or_create_by(

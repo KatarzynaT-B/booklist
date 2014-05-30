@@ -2,6 +2,13 @@ require 'spec_helper'
 require 'webmock/rspec'
 
 describe "data import for Book model", :type => :model do
+  let(:books_importer) { BooksImporter.new }
+
+  before do
+    allow(books_importer).to receive(:fetch).with(BooksImporter::DEFAULT_URL).and_return(books_list_body)
+    allow(books_importer).to receive(:fetch).with(books_list_body[0]["href"]).and_return(single_book_hash)
+  end
+
 
   context "while book not in database" do
     let(:books_list_body) { [{
@@ -51,10 +58,7 @@ describe "data import for Book model", :type => :model do
       "cover_thumb"=>"http://wolnelektury.pl/media/cache/2e/07/2e07d4fdf230bb099db8b7caeec6c99c.jpg"
       } }
 
-    it "saves the book to the database" do
-      allow_any_instance_of(BooksImporter).to receive(:fetch).and_return(books_list_body)
-      books_importer = BooksImporter.new
-      allow_any_instance_of(BooksImporter).to receive(:fetch).and_return(single_book_hash)
+    specify do
       expect{ books_importer.import }.to change{ Book.count }.by(1)
     end
   end
@@ -118,18 +122,13 @@ describe "data import for Book model", :type => :model do
       "epub"=>"http://wolnelektury.pl/media/book/epub/trylogia-ksiezycowa-zwyciezca.epub",
       "cover_thumb"=>"http://wolnelektury.pl/media/cache/20/5a/205a2caafad0579ca17a3d8ceb468995.jpg"
       } }
-    before {  allow_any_instance_of(BooksImporter).to receive(:fetch).and_return(books_list_body)  }
 
     it "doesn't create new book if such exists in database" do
-      books_importer = BooksImporter.new
-      allow(books_importer).to receive(:fetch).and_return(single_book_hash)
       expect{ books_importer.import }.not_to change{ Book.count }
       expect(book.author).to eq("Jerzy Żuławski")
     end
 
     it "updates the attributes of existing book if changed" do
-      books_importer = BooksImporter.new
-      allow(books_importer).to receive(:fetch).and_return(single_book_hash)
       expect{ books_importer.import }.to change{ book.reload; book.mobi }.from(false).to(true)
     end
 

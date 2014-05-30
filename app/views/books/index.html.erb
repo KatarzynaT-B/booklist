@@ -1,0 +1,36 @@
+<h1>Lista książek dostępnych w serwisie WolneLektury</h1>
+
+<%= search_form_for @q do |f| %>
+  <% %w{title author genre epoch}.each do |data| %>
+    <%= f.label "#{data.to_sym}_cont" %>
+    <%= f.search_field "#{data.to_sym}_cont" %>
+  <% end %>
+  <% %w{audio mobi epub pdf txt}.each do |format| %>
+    <%= f.label "#{format.to_sym}_true" %>
+    <%= f.check_box "#{format.to_sym}_true" %>
+  <% end %>
+  <%= f.submit %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= sort_link @q, :title, "Tytuł" %></th>
+      <th><%= sort_link @q, :author, "Autor" %></th>
+      <th><%= sort_link @q, :genre, "Gatunek" %></th>
+      <th>Dostępne formaty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= link_to book.title, book %></th>
+        <td><%= book.author %></th>
+        <td><%= book.genre %></th>
+        <td><%= show_available_formats_of(book) %></th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</br>
+<%= will_paginate %>

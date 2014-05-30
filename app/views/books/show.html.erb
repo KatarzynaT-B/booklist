@@ -1,0 +1,23 @@
+<h1><%= @book.title %></h1>
+<table>
+  <thead>
+    <tr>
+      <th>Autor:</th>
+      <th>Link:</th>
+      <th>Rodzaj:</th>
+      <th>Gatunek:</th>
+      <th>Epoka:</th>
+      <th>Dostępne formaty:</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @book.author %></td>
+      <td><%= link_to "Rozpocznij lekturę", @book.url %></td>
+      <td><%= @book.kind %></td>
+      <td><%= @book.genre %></td>
+      <td><%= @book.epoch %></td>
+      <td><%= show_available_formats_of(@book) %></td>
+    </tr>
+  </tbody>
+</table>
