@@ -1,0 +1,30 @@
+<h1>Przeczytane</h1>
+
+<%= render partial: 'shared/book_search_form' %>
+
+<div class='col-sm-12 result'>
+<table class='table table-striped'>
+  <thead>
+    <tr>
+      <th><%= sort_link @q, :title, "Tytuł" %></th>
+      <th><%= sort_link @q, :author, "Autor" %></th>
+      <th><%= sort_link @q, :genre, "Gatunek" %></th>
+      <th>Usuń z listy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @finished_books.each do |book| %>
+      <% if @books_id.include?(book.id) %>
+        <tr>
+          <td><%= link_to book.title, book %></td>
+          <td><%= book.author %></td>
+          <td><%= book.genre %></td>
+          <td><%= button_to "Usuń", finished_book_path(id: find_finished_id(book, current_user)), method: :delete %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+</br>
+<%= will_paginate %>
+</div>

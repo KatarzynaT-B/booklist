@@ -1,34 +1,50 @@
 <h1>Lista książek dostępnych w serwisie WolneLektury</h1>
 
-<%= search_form_for @q do |f| %>
-  <fieldset class="search_part col-sm-4">
-    <legend>Szukaj książki:</legend>
-      <% [:title, :author, :genre, :epoch].each do |field| %>
-        <div class='form-group'>
-          <%= f.label "#{field}_cont", field, class: 'col-sm-3 control-label' %>
-          <div class='col-sm-9  search_row'>
-            <%= f.search_field "#{field}_cont", class: 'form-control', placeholder: field %>
-          </div>
-        </div>
-      <% end %>
-  </fieldset>
+<%= render partial: 'shared/book_search_form' %>
 
-  <fieldset class="search_part col-sm-4">
-  <legend>Sprawdź dostępność formatu:</legend>
-    <% [:audio, :mobi, :epub, :pdf, :txt].each do |format| %>
-      <div class='form-group check_box'>
-        <div class='col-sm-2'>
-          <div class='checkbox'>
-            <%= f.check_box "#{format}_true" %>
-          </div>
-          <%= f.label "#{format}_true", format %>
-        </div>
-      </div>
+<div class='col-sm-12 result'>
+<table class='table table-striped'>
+  <thead>
+    <tr>
+      <th><%= sort_link @q, :title, "Tytuł" %></th>
+      <th><%= sort_link @q, :author, "Autor" %></th>
+      <th><%= sort_link @q, :genre, "Gatunek" %></th>
+      <th>mobi</th>
+      <th>epub</th>
+      <th>pdf</th>
+      <th>txt</th>
+      <th>audio</th>
+      <th>Chcę przeczytać:</th>
+      <th>Przeczytane:</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= link_to book.title, book %></td>
+        <td><%= book.author %></td>
+        <td><%= book.genre %></td>
+        <td><%= book.mobi ? "+" : "-" %></td>
+        <td><%= book.epub ? "+" : "-" %></td>
+        <td><%= book.pdf ? "+" : "-" %></td>
+        <td><%= book.txt ? "+" : "-" %></td>
+        <td><%= book.audio ? "+" : "-" %></td>
+
+        <% if current_user && exists_favourite?(book, current_user) %>
+          <td><%= button_to "Nie chcę przeczytać", favourite_path(id: find_favourite_id(book, current_user)), method: :delete %></td>
+        <% else %>
+          <td><%= button_to "Chcę przeczytać", favourites_path(book_id: book.id) %></td>
+        <% end %>
+
+        <% if current_user && exists_finished?(book, current_user) %>
+          <td><%= button_to "Nieprzeczytana", finished_book_path(id: find_finished_id(book, current_user)), method: :delete %></td>
+        <% else %>
+          <td><%= button_to "Przeczytana", finished_books_path(book_id: book.id) %></td>
+        <% end %>
+      </tr>
     <% end %>
-  </fieldset>
-  <div class='col-sm-5'>
-  <%= f.submit "szukaj", class: 'btn btn-default search_finish col-sm-2' %>
-  </div>
-<% end %>
-
-<%= render 'results' %>
+  </tbody>
+</table>
+</br>
+<%= will_paginate %>
+</div>

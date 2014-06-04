@@ -1,0 +1,41 @@
+<h1>Do przeczytania:</h1>
+
+<%= render partial: 'shared/book_search_form' %>
+
+<div class='col-sm-12 result'>
+<table class='table table-striped'>
+  <thead>
+    <tr>
+      <th><%= sort_link @q, :title, "Tytuł" %></th>
+      <th><%= sort_link @q, :author, "Autor" %></th>
+      <th><%= sort_link @q, :genre, "Gatunek" %></th>
+      <th>mobi</th>
+      <th>epub</th>
+      <th>pdf</th>
+      <th>txt</th>
+      <th>audio</th>
+      <th>Usuń z listy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @favourites.each do |book| %>
+      <% if @books_id.include?(book.id) %>
+        <tr>
+          <td><%= link_to book.title, book %></td>
+          <td><%= book.author %></td>
+          <td><%= book.genre %></td>
+          <td><%= book.mobi ? "+" : "-" %></td>
+          <td><%= book.epub ? "+" : "-" %></td>
+          <td><%= book.pdf ? "+" : "-" %></td>
+          <td><%= book.txt ? "+" : "-" %></td>
+          <td><%= book.audio ? "+" : "-" %></td>
+          <td><%= button_to "Usuń", favourite_path(id: find_favourite_id(book, current_user)), method: :delete %></td>
+        </tr>
+
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+</br>
+<%= will_paginate %>
+</div>

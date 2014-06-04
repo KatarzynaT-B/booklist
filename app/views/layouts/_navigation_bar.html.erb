@@ -1,0 +1,35 @@
+<div class='navbar navbar-default'>
+  <div class='container-fluid'>
+    <div class='navbar-header'>
+
+      <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#page-navigation-navbar-collapse-1'>
+        <span class='sr-only'></span>
+        <span class='icon-bar'></span>
+        <span class='icon-bar'></span>
+        <span class='icon-bar'></span>
+      </button>
+      <%= link_to "Booklist", root_path, class: 'navbar-brand' %>
+    </div>
+
+    <div class='collapse navbar-collapse' id='page-navigation-navbar-collapse-1'>
+    <% if user_signed_in? %>
+      <ul class='nav navbar-nav'>
+        <li><%= link_to "Chcę przeczytać", favourites_path %></li>
+        <li><%= link_to "Przeczytane", finished_books_path %></li>
+        <li><%= link_to "Dostępne książki", books_path %></li>
+      </ul>
+      <ul class='nav navbar-nav navbar-right'>
+        <li><%= link_to "Wyloguj się", destroy_user_session_path, method: :delete %></li>
+        <li><%= link_to "Zmień dane", edit_user_registration_path %></li>
+      </ul>
+    <% else %>
+      <ul class='nav navbar-nav'>
+        <li><%= link_to "Dostępne książki", books_path %></li>
+      </ul>
+      <ul class='nav navbar-nav navbar-right'>
+        <%= link_to "Zaloguj się", new_user_session_path %> lub <%= link_to "załóż konto", new_user_registration_path %>
+      </ul>
+    <% end %>
+    </div>
+  </div>
+</div>

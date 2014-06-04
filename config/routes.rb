@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :books, only: [:index, :show]
+  resources :favourites, only: [:create, :index, :destroy]
+  resources :finished_books, only: [:create, :index, :destroy]
   # get 'books/index'
 
   # get 'books/show'
