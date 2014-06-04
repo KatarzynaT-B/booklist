@@ -1,7 +1,7 @@
 class FavouritesController < ApplicationController
   before_action :authenticate_user!
   def create
-    current_user.favourites.create(book_id: params[:book_id].to_i)
+    current_user.favourites.create(book_id: params[:id])
     redirect_to books_path
   end
 
@@ -17,10 +17,8 @@ class FavouritesController < ApplicationController
   end
 
   def destroy
-    favourite = Favourite.find(params[:id])
-    prev_page = request.referer
+    favourite = Favourite.find_by(book_id: params[:id], user_id: current_user.id)
     favourite.destroy
-    # redirect_to :back
-    redirect_to prev_page
+    redirect_to :back
   end
 end

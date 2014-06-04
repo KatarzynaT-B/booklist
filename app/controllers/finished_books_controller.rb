@@ -1,7 +1,7 @@
 class FinishedBooksController < ApplicationController
   before_action :authenticate_user!
   def create
-    current_user.finished_books.create(book_id: params[:book_id].to_i)
+    current_user.finished_books.create(book_id: params[:id])
     redirect_to books_path
   end
 
@@ -17,8 +17,8 @@ class FinishedBooksController < ApplicationController
   end
 
   def destroy
-    favourite = Favourite.find(params[:id])
-    favourite.destroy
+    finished = FinishedBook.find_by(book_id: params[:id], user_id: current_user.id)
+    finished.destroy
     redirect_to :back
   end
 end

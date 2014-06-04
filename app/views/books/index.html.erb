@@ -1,4 +1,6 @@
-<h1>Lista książek dostępnych w serwisie WolneLektury</h1>
+<div class='page-header'>
+  <h2>Książki - Wolne Lektury:</h2>
+</div>
 
 <%= render partial: 'shared/book_search_form' %>
 
@@ -24,22 +26,50 @@
         <td><%= link_to book.title, book %></td>
         <td><%= book.author %></td>
         <td><%= book.genre %></td>
-        <td><%= book.mobi ? "+" : "-" %></td>
-        <td><%= book.epub ? "+" : "-" %></td>
-        <td><%= book.pdf ? "+" : "-" %></td>
-        <td><%= book.txt ? "+" : "-" %></td>
-        <td><%= book.audio ? "+" : "-" %></td>
+        <% if book.mobi %>
+          <td><span class='glyphicon glyphicon-check'></td>
+        <% else %>
+          <td><span class='glyphicon glyphicon-minus'></td>
+        <% end %>
+        <% if book.epub %>
+          <td><span class='glyphicon glyphicon-check'></td>
+        <% else %>
+          <td><span class='glyphicon glyphicon-minus'></td>
+        <% end %>
+        <% if book.pdf %>
+          <td><span class='glyphicon glyphicon-check'></td>
+        <% else %>
+          <td><span class='glyphicon glyphicon-minus'></td>
+        <% end %>
+        <% if book.txt %>
+          <td><span class='glyphicon glyphicon-check'></td>
+        <% else %>
+          <td><span class='glyphicon glyphicon-minus'></td>
+        <% end %>
+        <% if book.audio %>
+          <td><span class='glyphicon glyphicon-check'></td>
+        <% else %>
+          <td><span class='glyphicon glyphicon-minus'></td>
+        <% end %>
 
         <% if current_user && exists_favourite?(book, current_user) %>
-          <td><%= button_to "Nie chcę przeczytać", favourite_path(id: find_favourite_id(book, current_user)), method: :delete %></td>
+          <td><%= button_to favourite_path(book.id), method: :delete, class: 'btn btn-success' do %>
+            <span class='glyphicon glyphicon-ok'></td>
+          <% end %>
         <% else %>
-          <td><%= button_to "Chcę przeczytać", favourites_path(book_id: book.id) %></td>
+          <td><%= button_to favourites_path(id: book.id), class: 'btn btn-default' do %>
+            <span class='glyphicon glyphicon-remove'></td>
+          <% end %>
         <% end %>
 
         <% if current_user && exists_finished?(book, current_user) %>
-          <td><%= button_to "Nieprzeczytana", finished_book_path(id: find_finished_id(book, current_user)), method: :delete %></td>
+          <td><%= button_to finished_book_path(book.id), method: :delete, class: 'btn btn-success' do %>
+            <span class='glyphicon glyphicon-ok'></td>
+          <% end %>
         <% else %>
-          <td><%= button_to "Przeczytana", finished_books_path(book_id: book.id) %></td>
+          <td><%= button_to finished_books_path(id: book.id), class: 'btn btn-default' do %>
+            <span class='glyphicon glyphicon-remove'></td>
+          <% end %>
         <% end %>
       </tr>
     <% end %>

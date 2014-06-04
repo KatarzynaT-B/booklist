@@ -14,15 +14,8 @@ module BooksHelper
     Favourite.exists?(book_id: book.id, user_id: user.id)
   end
 
-  def find_favourite_id(book, user)
-    Favourite.find_by(book_id: book.id, user_id: user.id).id
-  end
-
   def exists_finished?(book, user)
     FinishedBook.exists?(book_id: book.id, user_id: user.id)
   end
 
-  def find_finished_id(book, user)
-    FinishedBook.find_by(book_id: book.id, user_id: user.id).id
-  end
 end
