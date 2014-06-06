@@ -8,4 +8,6 @@ class User < ActiveRecord::Base
   has_many :books, through: :finished_books
   has_many :favourites
   has_many :finished_books
+
+
 end

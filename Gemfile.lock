@@ -10,6 +10,23 @@ GIT
       i18n
       polyamorous (~> 1.0.0)
 
+GIT
+  remote: git://github.com/gregbell/active_admin.git
+  revision: 3d7605f82706c8e107852f44c61ba6d8e9f2100d
+  specs:
+    activeadmin (1.0.0.pre)
+      arbre (~> 1.0)
+      bourbon
+      coffee-rails
+      formtastic (~> 2.3.0.rc3)
+      inherited_resources (~> 1.3)
+      jquery-rails
+      jquery-ui-rails
+      kaminari (~> 0.15)
+      rails (>= 3.2, < 4.2)
+      ransack (~> 1.0)
+      sass-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -40,10 +57,15 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.6)
+    arbre (1.0.1)
+      activesupport (>= 3.0.0)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
+    bourbon (3.2.3)
+      sass (~> 3.2)
+      thor
     builder (3.2.2)
     capybara (2.2.1)
       mime-types (>= 1.16)
@@ -85,15 +107,28 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
+    formtastic (2.3.0.rc3)
+      actionpack (>= 3.0)
+    has_scope (0.6.0.rc)
+      actionpack (>= 3.2, < 5)
+      activesupport (>= 3.2, < 5)
     hike (1.2.3)
     i18n (0.6.9)
+    inherited_resources (1.5.0)
+      has_scope (~> 0.6.0.rc)
+      responders (~> 1.0)
     jbuilder (2.0.7)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.2.1)
+      railties (>= 3.2.16)
     json (1.8.1)
+    kaminari (0.15.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -132,6 +167,8 @@ GEM
     rdoc (4.1.1)
       json (~> 1.4)
     ref (1.0.5)
+    responders (1.1.0)
+      railties (>= 3.2, < 5)
     rspec-core (3.0.0.rc1)
       rspec-support (= 3.0.0.rc1)
     rspec-expectations (3.0.0.rc1)
@@ -198,6 +235,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activeadmin!
   bootstrap-sass
   capybara
   coffee-rails (~> 4.0.0)

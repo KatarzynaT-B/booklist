@@ -2,6 +2,8 @@ class FinishedBooksController < ApplicationController
   before_action :authenticate_user!
   def create
     current_user.finished_books.create(book_id: params[:id])
+    favourite = current_user.favourites.find_by(book_id: params[:id])
+    favourite.destroy if favourite
     redirect_to books_path
   end
 

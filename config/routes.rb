@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
+  ActiveAdmin.routes(self)
+  devise_for :users, controllers: { sessions: "sessions" }
   resources :books, only: [:index, :show]
   resources :favourites, only: [:create, :index, :destroy]
   resources :finished_books, only: [:create, :index, :destroy]
