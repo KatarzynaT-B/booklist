@@ -19,7 +19,7 @@
           <td><%= link_to book.title, book %></td>
           <td><%= book.author %></td>
           <td><%= book.genre %></td>
-          <td><%= button_to "Usuń", finished_book_path(book.id), method: :delete %></td>
+          <td><%= button_to "Usuń", finished_book_path(book.id), method: :delete, class: 'btn btn-default' %></td>
         </tr>
       <% end %>
     <% end %>

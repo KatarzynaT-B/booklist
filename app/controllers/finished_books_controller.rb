@@ -1,10 +1,14 @@
 class FinishedBooksController < ApplicationController
   before_action :authenticate_user!
+  include ApplicationHelper
+
   def create
-    current_user.finished_books.create(book_id: params[:id])
     favourite = current_user.favourites.find_by(book_id: params[:id])
     favourite.destroy if favourite
-    redirect_to books_path
+    @finished = current_user.finished_books.create(book_id: params[:id])
+
+    redirect_to books_path, notice: "Dodano książkę do przeczytanych."
+    flash[:reverting] = "#{undo_link(@finished, also_to_revert: favourite)}"
   end
 
   def index
@@ -19,8 +23,9 @@ class FinishedBooksController < ApplicationController
   end
 
   def destroy
-    finished = FinishedBook.find_by(book_id: params[:id], user_id: current_user.id)
-    finished.destroy
-    redirect_to :back
+    @finished = @current_user.finished_books.find_by(book_id: params[:id])
+    @finished.destroy
+    redirect_to :back, notice: "Usunięto książkę z listy przeczytanych."
+    flash[:reverting] = "#{undo_link(@finished, scope: :scoped)}"
   end
 end

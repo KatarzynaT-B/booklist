@@ -12,13 +12,16 @@ class BooksImporter
   def import
     books = fetch(@site_url)
 
-    books.each do |book_hash|
+    # books.each do |book_hash|
+    0.upto(30) do |i|
+      book_hash = books[i]
       book_url = book_hash["href"]
       book_details = fetch(book_url)
       book = Book.find_or_create_by(
         title: book_hash["title"],
-        author: book_hash["author"
-      ])
+        author: book_hash["author"],
+        source: @site_url
+      )
       params = prepare_params(book_hash, book_details)
       book.update(params)
     end

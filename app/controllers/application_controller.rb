@@ -10,4 +10,11 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  def info_for_paper_trail
+    { ip: request.remote_ip }
+  end
+
+
+
 end

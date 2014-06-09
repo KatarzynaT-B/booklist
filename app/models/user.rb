@@ -9,5 +9,5 @@ class User < ActiveRecord::Base
   has_many :favourites
   has_many :finished_books
 
-
+  has_paper_trail meta: { timestamp: Time.now }
 end

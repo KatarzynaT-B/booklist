@@ -24,12 +24,32 @@
           <td><%= link_to book.title, book %></td>
           <td><%= book.author %></td>
           <td><%= book.genre %></td>
-          <td><%= book.mobi ? "+" : "-" %></td>
-          <td><%= book.epub ? "+" : "-" %></td>
-          <td><%= book.pdf ? "+" : "-" %></td>
-          <td><%= book.txt ? "+" : "-" %></td>
-          <td><%= book.audio ? "+" : "-" %></td>
-          <td><%= button_to "Usuń", favourite_path(book.id), method: :delete %></td>
+          <% if book.mobi %>
+            <td><span class='glyphicon glyphicon-check'></td>
+          <% else %>
+            <td><span class='glyphicon glyphicon-minus'></td>
+          <% end %>
+          <% if book.epub %>
+            <td><span class='glyphicon glyphicon-check'></td>
+          <% else %>
+            <td><span class='glyphicon glyphicon-minus'></td>
+          <% end %>
+          <% if book.pdf %>
+            <td><span class='glyphicon glyphicon-check'></td>
+          <% else %>
+            <td><span class='glyphicon glyphicon-minus'></td>
+          <% end %>
+          <% if book.txt %>
+            <td><span class='glyphicon glyphicon-check'></td>
+          <% else %>
+            <td><span class='glyphicon glyphicon-minus'></td>
+          <% end %>
+          <% if book.audio %>
+            <td><span class='glyphicon glyphicon-check'></td>
+          <% else %>
+            <td><span class='glyphicon glyphicon-minus'></td>
+          <% end %>
+          <td><%= button_to "Usuń", favourite_path(book.id), method: :delete, class: 'btn btn-default' %></td>
         </tr>
 
       <% end %>

@@ -1,15 +1,17 @@
 ActiveAdmin.register Book do
 
-  permit_params :title, :author, :genre, :epoch, :kind, :audio, :mobi, :epub, :pdf, :txt, :url
+  permit_params :title, :author, :source, :genre, :epoch, :kind, :audio, :mobi, :epub, :pdf, :txt, :url
 
   batch_action :destroy
 
   scope :all, default: true
   scope :recently_modified
+  scope :wolne_lektury
 
   filter :id, label: "ID książki"
   filter :title, label: "Tytuł"
-  filter :author, id: "Author"
+  filter :author, label: "Author"
+  filter :source, label: "Źródło"
   filter :mobi
   filter :epub
   filter :pdf
@@ -25,6 +27,7 @@ ActiveAdmin.register Book do
       link_to book.title, admin_book_path(book)
     end
     column "Autor", :author
+    column "Źródło", :source
     column "Data dodania", sortable: :created_at do |book|
       book.created_at.strftime("%Y-%m-%d, %H:%M")
     end
@@ -38,6 +41,7 @@ ActiveAdmin.register Book do
     attributes_table do
       row :title
       row :author
+      row :source
       row :genre
       row :kind
       row :epoch
@@ -78,6 +82,5 @@ ActiveAdmin.register Book do
     books.import
     redirect_to "/admin/books"
   end
-
 
 end

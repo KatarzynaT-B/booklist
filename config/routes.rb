@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post 'versions/revert' => 'versions#revert', as: "revert_version"
   ActiveAdmin.routes(self)
   devise_for :users, controllers: { sessions: "sessions" }
   resources :books, only: [:index, :show]
