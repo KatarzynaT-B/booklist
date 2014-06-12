@@ -14,7 +14,7 @@ class FavouritesController < ApplicationController
 
   def index
     @q = Book.search(params[:q])
-    @favourites = @q.result.page(params[:page])
+    @favourites = @q.result.page(params[:page]).per(20)
     @books_id = []
     @favourites.each do |book|
       book.favourites.each do |fav|

@@ -13,7 +13,7 @@ class FinishedBooksController < ApplicationController
 
   def index
     @q = Book.search(params[:q])
-    @finished_books = @q.result.page(params[:page])
+    @finished_books = @q.result.page(params[:page]).per(20)
     @books_id = []
     @finished_books.each do |book|
       book.finished_books.each do |fin|
