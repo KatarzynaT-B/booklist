@@ -27,6 +27,7 @@ ActiveAdmin.register User do
     column "Ostatnia zmiana", sortable: :updated_at do |user|
       user.updated_at.strftime("%Y-%m-%d, %H:%M")
     end
+
     actions
   end
 
