@@ -15,6 +15,4 @@ class ApplicationController < ActionController::Base
     { ip: request.remote_ip }
   end
 
-
-
 end
