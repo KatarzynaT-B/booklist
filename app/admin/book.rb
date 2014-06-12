@@ -1,5 +1,10 @@
 ActiveAdmin.register Book do
 
+  controller do |book|
+    layout 'active_admin'
+    @book = book
+  end
+
   permit_params :title, :author, :source, :genre, :epoch, :kind, :audio, :mobi, :epub, :pdf, :txt, :url
 
   batch_action :destroy
@@ -38,32 +43,7 @@ ActiveAdmin.register Book do
   end
 
   show do |book|
-    attributes_table do
-      row :title
-      row :author
-      row :source
-      row :genre
-      row :kind
-      row :epoch
-      row :url
-      row :mobi do |book|
-        book.mobi ? status_tag("tak", :ok) : status_tag("nie")
-      end
-      row :epub do |book|
-        book.epub ? status_tag("tak", :ok) : status_tag("nie")
-      end
-      row :pdf do |book|
-        book.pdf ? status_tag("tak", :ok) : status_tag("nie")
-      end
-      row :txt do |book|
-        book.txt ? status_tag("tak", :ok) : status_tag("nie")
-      end
-      row :audio do |book|
-        book.audio ? status_tag("tak", :ok) : status_tag("nie")
-      end
-      row :created_at
-      row :updated_at
-    end
+    render 'book'
   end
 
   sidebar "Stats", only: :show do

@@ -1,0 +1,96 @@
+<table>
+  <tr>
+    <th>ID</th>
+    <td><%= @book.id %></td>
+  </tr>
+  <tr>
+    <th>Tytuł</th>
+    <td><%= @book.title %></td>
+  </tr>
+  <tr>
+    <th>Autor</th>
+    <td><%= @book.author %></td>
+  </tr>
+  <tr>
+    <th>Źródło</th>
+    <td><%= @book.source %></td>
+  </tr>
+  <tr>
+    <th>Gatunek</th>
+    <td><%= @book.genre %></td>
+  </tr>
+  <tr>
+    <th>Epoka</th>
+    <td><%= @book.epoch %></td>
+  </tr>
+    <tr>
+    <th>Url</th>
+    <td><%= @book.url %></td>
+  </tr>
+    <tr>
+    <th>Mobi</th>
+    <% if @book.mobi %>
+      <td><span class="status_tag ok">tak</span></td>
+    <% else %>
+      <td><span class="status_tag ok">nie</span></td>
+    <% end %>
+  </tr>
+  <tr>
+    <th>Epub</th>
+    <% if @book.epub %>
+      <td><span class="status_tag ok">tak</span></td>
+    <% else %>
+      <td><span class="status_tag ok">nie</span></td>
+    <% end %>
+  </tr>
+  <tr>
+    <th>Pdf</th>
+    <% if @book.pdf %>
+      <td><span class="status_tag ok">tak</span></td>
+    <% else %>
+      <td><span class="status_tag ok">nie</span></td>
+    <% end %>
+  </tr>
+  <tr>
+    <th>Txt</th>
+    <% if @book.txt %>
+      <td><span class="status_tag ok">tak</span></td>
+    <% else %>
+      <td><span class="status_tag ok">nie</span></td>
+    <% end %>
+  </tr>
+  <tr>
+    <th>Audio</th>
+    <% if @book.audio %>
+      <td><span class="status_tag ok">tak</span></td>
+    <% else %>
+      <td><span class="status_tag ok">nie</span></td>
+    <% end %>
+  </tr>
+  <tr>
+    <th>Dodana</th>
+    <td><%= @book.created_at %></td>
+  </tr>
+  <tr>
+    <th>Ostatnia zmiana</th>
+    <td><%= @book.updated_at %></td>
+  </tr>
+  <tr>
+    <th>Zmiany</th>
+    <td>
+      <ol>
+        <% @book.versions.each do |version| %>
+          <li>
+            <%= indicate_user(version) %><br>
+            <%= version.created_at.strftime("Data: %Y-%m-%d, g. %H:%M") %>
+            <ul>
+              <% modification_description(version).each do |mod| %>
+                <li><%= mod %></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ol>
+    </td>
+  </tr>
+</table>
