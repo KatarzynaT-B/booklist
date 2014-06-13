@@ -1,8 +1,10 @@
 ActiveAdmin.register Book do
 
   controller do |book|
-    layout 'active_admin'
-    @book = book
+    def show
+      @book = Book.find(params[:id])
+      render 'show', layout: 'active_admin'
+    end
   end
 
   permit_params :title, :author, :source, :genre, :epoch, :kind, :audio, :mobi, :epub, :pdf, :txt, :url
@@ -40,10 +42,6 @@ ActiveAdmin.register Book do
       book.updated_at.strftime("%Y-%m-%d, %H:%M")
     end
     actions
-  end
-
-  show do |book|
-    render 'book'
   end
 
   sidebar "Stats", only: :show do

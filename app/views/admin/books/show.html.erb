@@ -64,7 +64,7 @@
     <% if @book.audio %>
       <td><span class="status_tag ok">tak</span></td>
     <% else %>
-      <td><span class="status_tag ok">nie</span></td>
+      <td><span class="status_tag">nie</span></td>
     <% end %>
   </tr>
   <tr>
@@ -82,7 +82,8 @@
         <% @book.versions.each do |version| %>
           <li>
             <%= indicate_user(version) %><br>
-            <%= version.created_at.strftime("Data: %Y-%m-%d, g. %H:%M") %>
+            <%= version.created_at.strftime("Data: %Y-%m-%d, g. %H:%M") %><br>
+            <%= link_to "ID zmiany: #{version.id}", admin_paper_trail_version_path(version) %>
             <ul>
               <% modification_description(version).each do |mod| %>
                 <li><%= mod %></li>

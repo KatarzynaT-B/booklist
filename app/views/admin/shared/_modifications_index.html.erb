@@ -12,20 +12,23 @@
   <tbody>
     <% versions.each do |version| %>
       <tr>
-        <td><%= link_to "#{version.id}", admin_paper_trail_version_path(version) %></td>
         <% if version.item_type == "Book" %>
+          <td><%= link_to version.id, admin_paper_trail_version_path(version) %></td>
           <td><span class="status_tag ok">Książka</span></td>
         <% elsif version.item_type == "Favourite" %>
+          <td><span class="status_tag"><%= version.id %></td>
           <td><span class="status_tag">Do przeczytania</span></td>
         <% elsif version.item_type == "FinishedBook" %>
+          <td><span class="status_tag"><%= version.id %></td>
           <td><span class="status_tag">Przeczytane</span></td>
         <% else %>
+          <td><%= link_to version.id, admin_paper_trail_version_path(version) %></td>
           <td><span class="status_tag ok">Użytkownik</span></td>
         <% end %>
         <% if version.item_type == "Book" %>
-          <td><%= link_to "#{version.item_id}", admin_book_path(Book.find(version.item_id.to_i)) %></td>
+          <td><%= link_to version.item_id, admin_book_path(Book.find(version.item_id.to_i)) %></td>
         <% elsif version.item_type == "User" %>
-          <td><%= link_to "#{version.item_id}", admin_book_path(User.find(version.item_id.to_i)) %></td>
+          <td><%= link_to version.item_id, admin_book_path(User.find(version.item_id.to_i)) %></td>
         <% else %>
           <td><span class="status_tag ok"><%= version.item_id %></span></td>
         <% end %>
@@ -37,16 +40,8 @@
         <% end %>
         <td>
           <ul>
-            <% if version.changeset.empty? %>
-              <li>rekord usunięto</li>
-            <% else %>
-              <% version.changeset.each do |key, value| %>
-                <% if value[0].nil? %>
-                  <li><%= "podano #{key}: #{value[1]}" %></li>
-                <% else %>
-                  <li><%= "zmieniono #{key}: z '#{value[0]}' na '#{value[1]}'" %></li>
-                <% end %>
-              <% end %>
+            <% modification_description(version).each do |mod| %>
+              <li><%= mod %></li>
             <% end %>
           </ul>
         </td>

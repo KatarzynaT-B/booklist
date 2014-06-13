@@ -1,4 +1,4 @@
-module ActiveAdmin::BookShowHelper
+module ActiveAdmin::ShowHelper
 
   def indicate_user(version)
     if version.whodunnit.nil?
@@ -17,7 +17,7 @@ module ActiveAdmin::BookShowHelper
 
   def modification_description(version)
     if version.changeset.empty?
-      modifications = "Rekord usunięto"
+      modifications = ["Rekord usunięto"]
     else
       modifications = version.changeset.inject([]) do |mod, (key, value)|
         if value[0].nil?
@@ -29,5 +29,6 @@ module ActiveAdmin::BookShowHelper
     end
     modifications
   end
+
 
 end
