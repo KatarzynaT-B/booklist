@@ -9,12 +9,21 @@
   </tr>
   <tr>
     <th>Obiekt zmiany</th>
-    <% if @version.item_type == "Book" %>
-      <td><%= link_to "#{Book.find(@version.item_id.to_i).title}", admin_book_path(Book.find(@version.item_id.to_i)) %></td>
-    <% elsif version.item_type == "User" %>
-      <td><%= link_to "#{User.find(@version.item_id.to_i).email}", admin_user_path(User.find(@version.item_id.to_i)) %></td>
-    <% else %>
+
+    <% if @version.item_type == "Favourite" || @version.item_type == "FinishedBook" %>
       <td><span class="status_tag ok">Właściciel listy</span></td>
+    <% elsif @version.item.present? %>
+      <% if @version.item_type == "Book" %>
+        <td><%= link_to "#{Book.find(@version.item_id.to_i).title}", admin_book_path(Book.find(@version.item_id.to_i)) %></td>
+      <% else %>
+        <td><%= link_to "#{User.find(@version.item_id.to_i).email}", admin_user_path(User.find(@version.item_id.to_i)) %></td>
+      <% end %>
+    <% else %>
+      <% if @version.item_type == "Book" %>
+        <td><span class="status_tag"><%= PaperTrail::Version.find_by(item_id: @version.item_id).scoped.changeset[:title][1] %></span></td>
+      <% else %>
+        <td><span class="status_tag"><%= PaperTrail::Version.find_by(item_id: @version.item_id).scoped.changeset[:email][1] %></span></td>
+      <% end %>
     <% end %>
   </tr>
   <tr>
