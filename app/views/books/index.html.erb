@@ -26,31 +26,7 @@
         <td><%= link_to book.title, book %></td>
         <td><%= book.author %></td>
         <td><%= book.genre %></td>
-        <% if book.mobi %>
-          <td><span class='glyphicon glyphicon-check'></td>
-        <% else %>
-          <td><span class='glyphicon glyphicon-minus'></td>
-        <% end %>
-        <% if book.epub %>
-          <td><span class='glyphicon glyphicon-check'></td>
-        <% else %>
-          <td><span class='glyphicon glyphicon-minus'></td>
-        <% end %>
-        <% if book.pdf %>
-          <td><span class='glyphicon glyphicon-check'></td>
-        <% else %>
-          <td><span class='glyphicon glyphicon-minus'></td>
-        <% end %>
-        <% if book.txt %>
-          <td><span class='glyphicon glyphicon-check'></td>
-        <% else %>
-          <td><span class='glyphicon glyphicon-minus'></td>
-        <% end %>
-        <% if book.audio %>
-          <td><span class='glyphicon glyphicon-check'></td>
-        <% else %>
-          <td><span class='glyphicon glyphicon-minus'></td>
-        <% end %>
+        <%= render partial: 'shared/book_formats', locals: { book: book } %>
 
         <% if current_user && exists_favourite?(book, current_user) %>
           <td><%= button_to favourite_path(book.id), method: :delete, class: 'btn btn-success' do %>
